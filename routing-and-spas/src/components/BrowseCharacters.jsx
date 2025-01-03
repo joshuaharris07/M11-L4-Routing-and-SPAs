@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 import CharacterDetail from './CharacterDetail';
 import CryptoJS from 'crypto-js';
 import { privateKey, publicKey } from '../config/keys';
@@ -7,9 +8,9 @@ import { privateKey, publicKey } from '../config/keys';
 // const publicKey = '';
 // const privateKey = '';
 
-const CharacterList = () => {
+const BrowseCharacters = () => {
     const [characters, setCharacters] = useState([]);
-    const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+    // const [selectedCharacterId, setSelectedCharacterId] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,11 +30,7 @@ const CharacterList = () => {
         <div className='container m-3'>
             <div className='row row-cols-1 row-cols-md-3 g-4'>
                 {characters.map((character) => (
-                    <div
-                        key={character.id}
-                        className="card"
-                        onClick={() => setSelectedCharacterId(character.id)}
-                    >
+                    <div key={character.id} className="card">
                         <img
                             src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
                             alt={character.name}
@@ -41,14 +38,15 @@ const CharacterList = () => {
                         />
                         <div className='card-body'>
                             <h5 className='card-title'>{character.name}</h5>
+                            <NavLink to={`/character-details/${character.id}`}className={"btn btn-primary"}>View Details</NavLink>
                         </div>
                     </div>
                 ))}
             </div>
-            {selectedCharacterId && <CharacterDetail characterId={selectedCharacterId} />}
+            {/* {selectedCharacterId && <CharacterDetail characterId={selectedCharacterId} />} */}
         </div>
     );
 };
 
-export default CharacterList;
+export default BrowseCharacters;
 
